@@ -424,6 +424,11 @@ async def get_dashboard_stats(current_user: User = Depends(get_current_user)):
         "recent_workouts": [Workout(**w).dict() for w in recent_workouts]
     }
 
+# Root endpoint
+@api_router.get("/")
+async def root():
+    return {"message": "Fitness Tracker API"}
+
 # Include the router in the main app
 app.include_router(api_router)
 
@@ -451,8 +456,3 @@ logger = logging.getLogger(__name__)
 @app.on_event("shutdown")
 async def shutdown_db_client():
     client.close()
-
-# Root endpoint
-@api_router.get("/")
-async def root():
-    return {"message": "Fitness Tracker API"}
